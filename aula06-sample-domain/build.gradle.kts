@@ -23,6 +23,9 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
+    implementation(project(":aula06-logger"))
+
+    // For using the reflection features
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // Use the Kotlin JDK 8 standard library.

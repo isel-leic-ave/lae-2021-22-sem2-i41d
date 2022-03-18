@@ -14,6 +14,13 @@ plugins {
     application
 }
 
+// Test Logging
+tasks.withType<Test> {
+    testLogging {
+        events("started", "passed", "skipped", "failed")
+    }
+}
+
 repositories {
     // Use JCenter for resolving dependencies.
     jcenter()
@@ -23,6 +30,7 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
+    // For using the reflection features
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
     // Use the Kotlin JDK 8 standard library.
