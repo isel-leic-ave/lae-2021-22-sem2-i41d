@@ -23,7 +23,7 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
-    implementation(project(":aula06-logger"))
+    implementation(project(":aula07-logger-custom-getter"))
 
     // For using the reflection features
     implementation("org.jetbrains.kotlin:kotlin-reflect")
