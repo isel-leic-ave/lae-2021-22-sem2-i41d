@@ -124,11 +124,7 @@ fun ZipInputStream.iterable() = object : Iterable<ZipEntry> {
 		var entry = this@iterable.nextEntry
 		override fun hasNext() = entry != null
 
-		override fun next(): ZipEntry {
-			val curr = entry
-			entry = this@iterable.nextEntry
-			return curr
-		}
+		override fun next() = entry.also { entry = this@iterable.nextEntry }
 	}
 }
 
