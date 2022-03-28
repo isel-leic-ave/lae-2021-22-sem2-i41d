@@ -34,11 +34,11 @@ class Logger(val out: Printer = PrinterConsole(), val kind: MembersKind = PROPER
         return getters.computeIfAbsent(klass, ::createGetterProperties)
     }
 
-
     private fun createGetterFunctions(klass: KClass<*>) : List<Getter> {
         return klass
             .declaredMembers
             .filter { it.returnType != unitType && it.valueParameters.isEmpty() }
+            .filter { it.hasAnnotation<ToLog>()}
             .map { prop -> object : Getter {
                 override fun readAndPrint(target: Any) {
                     val v = prop.call(target)
@@ -51,11 +51,19 @@ class Logger(val out: Printer = PrinterConsole(), val kind: MembersKind = PROPER
     private fun createGetterProperties(klass: KClass<*>) : List<Getter> {
         return klass
             .memberProperties
-            .map { prop -> object : Getter {
-                override fun readAndPrint(target: Any) {
-                    val v = prop.call(target)
-                    out.print("${prop.name} = $v, ") 
+            .filter { it.hasAnnotation<ToLog>()}
+            .map { prop ->
+                val formatter = prop.findAnnotation<ToLog>()?.formatter
+                object : Getter {
+                    override fun readAndPrint(target: Any) {
+                        val v = prop.call(target)
+                        val res = formatter?.let {
+                            val f = it.createInstance() as Formatter
+                            f.format(v)
+                        } ?: v
+                        out.print("${prop.name} = $res, ")
+                    }
                 }
-            }}
+            }
     }
 }

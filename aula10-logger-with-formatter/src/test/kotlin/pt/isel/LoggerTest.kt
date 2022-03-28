@@ -20,7 +20,7 @@ class LoggerTest {
     }
 
      @Test fun testLogAccountProperties() {
-        val expected = "SavingsAccount(annualInterestRate = 2.5, balance = 1000, )${System.lineSeparator()}"
+        val expected = "SavingsAccount(balance = 1000, )${System.lineSeparator()}"
         val a = SavingsAccount(1000, 2.5)
         val out = PrinterStringBuilder()
         val logger = Logger(out)
@@ -29,7 +29,7 @@ class LoggerTest {
     }
 
     @Test fun testLogAccountPropertiesAndFunctions() {
-        val expected = "SavingsAccount(annualInterestRate() = 2.5, balance() = 1000, monthlyInterest() = 208, )${System.lineSeparator()}"
+        val expected = "SavingsAccount(balance() = 1000, monthlyInterest() = 208, )${System.lineSeparator()}"
         val a = SavingsAccount(1000, 2.5)
         val out = PrinterStringBuilder()
         val logger = Logger(out, MembersKind.FUNCTIONS)
@@ -41,7 +41,7 @@ class LoggerTest {
 
     @Test fun testLogForConsole() {
         val logger = Logger()
-        logger.log(Point(5, 7))
+        logger.log(Student(8376473, "Ze Manel", Student.Address(713, "Rua das Papoilas")))
     }
 }
 
