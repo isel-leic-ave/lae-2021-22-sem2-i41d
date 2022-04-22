@@ -14,7 +14,7 @@ class PrinterStringBuilder : Printer {
 class LoggerTest {
     @Test fun testLogPointProperties() {
         val out = PrinterStringBuilder()
-        val logger = Logger(out)
+        val logger = LoggerReflect(out)
         logger.log(Point(5, 7))
         assertEquals("Point(x = 5, y = 7, )${System.lineSeparator()}", out.buffer.toString())
     }
@@ -23,7 +23,7 @@ class LoggerTest {
         val expected = "SavingsAccount(balance = 1000, )${System.lineSeparator()}"
         val a = SavingsAccount(1000, 2.5)
         val out = PrinterStringBuilder()
-        val logger = Logger(out)
+        val logger = LoggerReflect(out)
         logger.log(a)
         assertEquals(expected, out.buffer.toString())
     }
@@ -32,7 +32,7 @@ class LoggerTest {
         val expected = "SavingsAccount(balance() = 1000, monthlyInterest() = 208, )${System.lineSeparator()}"
         val a = SavingsAccount(1000, 2.5)
         val out = PrinterStringBuilder()
-        val logger = Logger(out, MembersKind.FUNCTIONS)
+        val logger = LoggerReflect(out, MembersKind.FUNCTIONS)
         logger.log(a)
         assertEquals(expected, out.buffer.toString())
     }
@@ -40,7 +40,7 @@ class LoggerTest {
 
 
     @Test fun testLogForConsole() {
-        val logger = Logger()
+        val logger = LoggerReflect()
         logger.log(Student(8376473, "Ze Manel", Student.Address(713, "Rua das Papoilas")))
     }
 }

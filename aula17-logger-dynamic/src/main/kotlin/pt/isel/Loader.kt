@@ -5,7 +5,7 @@ import java.io.File
 import java.net.URLClassLoader
 import javax.tools.ToolProvider
 
-private val root = File("./build")
+val root = File("./build")
 private val classLoader = URLClassLoader.newInstance(arrayOf(root.toURI().toURL()))
 private val compiler = ToolProvider.getSystemJavaCompiler()
 
