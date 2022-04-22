@@ -8,7 +8,16 @@ import kotlin.reflect.full.declaredFunctions
 
 
 fun main() {
-
+    val file = buildMyDynamic()
+    val loadMyDynamic: Any = loadAndCreateInstance(file, 28)
+    /*
+    val res = loadMyDynamic::class
+        .declaredFunctions
+        .find { it.name == "mul" }
+        ?.call(loadMyDynamic, 2);
+     */
+    val res = (loadMyDynamic as Multiplier).mul(2);
+    println(res);
 }
 
 
