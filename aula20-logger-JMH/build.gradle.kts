@@ -14,16 +14,23 @@ plugins {
     application
 }
 
+// Test Logging
+tasks.withType<Test> {
+    testLogging {
+        events("started", "passed", "skipped", "failed")
+    }
+}
+
 repositories {
     // Use JCenter for resolving dependencies.
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
+    implementation("com.squareup:javapoet:1.13.0")
+
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-
-    implementation(project(":aula20-logger-JMH"))
 
     // For using the reflection features
     implementation("org.jetbrains.kotlin:kotlin-reflect")
