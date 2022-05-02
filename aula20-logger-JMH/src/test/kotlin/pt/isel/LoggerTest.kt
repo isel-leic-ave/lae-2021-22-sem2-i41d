@@ -1,6 +1,5 @@
 package pt.isel
 
-import java.lang.StringBuilder
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -12,27 +11,57 @@ class PrinterStringBuilder : Printer {
 }
 
 class LoggerTest {
-    @Test fun testLogPointProperties() {
+    @Test fun testLogPointPropertiesReflect() {
         val out = PrinterStringBuilder()
         val logger = LoggerReflect(out)
+        logPointProperties(logger, out)
+    }
+
+     @Test fun testLogAccountPropertiesReflect() {
+        val out = PrinterStringBuilder()
+        val logger = LoggerReflect(out)
+        logAccountProperties(logger, out)
+    }
+
+    @Test fun testLogAccountPropertiesAndFunctionsReflect() {
+        val out = PrinterStringBuilder()
+        val logger = LoggerReflect(out, MembersKind.FUNCTIONS)
+        logAccountPropertiesAndFunctions(logger, out)
+    }
+
+   @Test fun testLogPointPropertiesDynamic() {
+        val out = PrinterStringBuilder()
+        val logger = LoggerDynamic(out)
+        logPointProperties(logger, out)
+    }
+
+     @Test fun testLogAccountPropertiesDynamic() {
+        val out = PrinterStringBuilder()
+        val logger = LoggerDynamic(out)
+        logAccountProperties(logger, out)
+    }
+
+    @Test fun testLogAccountPropertiesAndFunctionsDynamic() {
+        val out = PrinterStringBuilder()
+        val logger = LoggerDynamic(out, MembersKind.FUNCTIONS)
+        logAccountPropertiesAndFunctions(logger, out)
+    }
+
+    fun logPointProperties(logger: AbstractLogger, out: PrinterStringBuilder) {
         logger.log(Point(5, 7))
         assertEquals("Point(x = 5, y = 7, )${System.lineSeparator()}", out.buffer.toString())
     }
 
-     @Test fun testLogAccountProperties() {
+    fun logAccountProperties(logger: AbstractLogger, out: PrinterStringBuilder) {
         val expected = "SavingsAccount(balance = 1000, )${System.lineSeparator()}"
         val a = SavingsAccount(1000, 2.5)
-        val out = PrinterStringBuilder()
-        val logger = LoggerReflect(out)
         logger.log(a)
         assertEquals(expected, out.buffer.toString())
     }
 
-    @Test fun testLogAccountPropertiesAndFunctions() {
+    fun logAccountPropertiesAndFunctions(logger: AbstractLogger, out: PrinterStringBuilder) {
         val expected = "SavingsAccount(balance() = 1000, monthlyInterest() = 208, )${System.lineSeparator()}"
         val a = SavingsAccount(1000, 2.5)
-        val out = PrinterStringBuilder()
-        val logger = LoggerReflect(out, MembersKind.FUNCTIONS)
         logger.log(a)
         assertEquals(expected, out.buffer.toString())
     }

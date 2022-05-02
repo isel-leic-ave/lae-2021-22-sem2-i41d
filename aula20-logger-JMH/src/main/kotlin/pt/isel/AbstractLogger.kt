@@ -1,12 +1,9 @@
 package pt.isel
 
-import pt.isel.MembersKind.*
-import pt.isel.getters.GetterFunction
-import pt.isel.getters.GetterFunctionFormatter
-import pt.isel.getters.GetterProperty
-import pt.isel.getters.GetterPropertyFormatter
-import kotlin.reflect.full.*
+import pt.isel.MembersKind.FUNCTIONS
+import pt.isel.MembersKind.PROPERTIES
 import kotlin.reflect.KClass
+import kotlin.reflect.full.createType
 
 abstract class AbstractLogger(val out: Printer = PrinterConsole(), val kind: MembersKind = PROPERTIES) {
 
