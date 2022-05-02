@@ -80,7 +80,8 @@ fun buildGetterPropertyDynamic(domainKlass: KClass<*>, prop: KProperty<*>): Java
                 .addParameter(Object::class.java, "target")
                 .returns(TypeName.VOID)
                 .addStatement(
-                        "Object v = ((\$T) target).\$L()",
+                        "\$T v = ((\$T) target).\$L()",
+                        (prop.returnType.classifier as KClass<*>).java,
                         domainKlass.java,
                         prop.getter.javaMethod?.name)
                 .addStatement("out.print(\"\$L = \" + v + \", \")", prop.name)
