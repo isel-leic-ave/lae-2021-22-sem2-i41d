@@ -26,7 +26,7 @@ class DynamicLoggerTest {
          * Act and Assert.
          */
         getterBalance.readAndPrint(SavingsAccount(2733, 2.5))
-        assertEquals("balance = 2733,", out.buffer.toString())
+        assertEquals("balance = 2733, ", out.buffer.toString())
 
     }
 }

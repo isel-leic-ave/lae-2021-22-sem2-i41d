@@ -19,7 +19,7 @@ class LoggerDynamic(out: Printer = PrinterConsole(), kind: MembersKind = PROPERT
             .filter { it.returnType != unitType && it.valueParameters.isEmpty() }
             .filter { it.hasAnnotation<ToLog>()}
             .map { func ->
-                val file: JavaFile = buildGetterFunctionDynamic(out, func)
+                val file: JavaFile = buildGetterFunctionDynamic(klass, func)
                 loadAndCreateInstance(file, out) as Getter
             }
     }
