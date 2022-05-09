@@ -23,7 +23,7 @@ dependencies {
     // Align versions of all Kotlin components
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
 
-    implementation(project(":aula23-logger-dynamic-no-boxing"))
+    implementation(project(":aula24-logger-dynamic-no-boxing"))
 
     // For using the reflection features
     implementation("org.jetbrains.kotlin:kotlin-reflect")
