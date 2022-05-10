@@ -7,6 +7,10 @@ fun main() {
     foo(nr)
 }
 
+fun boxing(nr: Int) : Any { return nr }
+
+fun unboxing(nr: Int?) : Int { return nr ?: throw Exception("Null not supported for primitive Int!") }
+
 fun foo(obj: Any) {
     val s2: Student = obj as Student
     print(s2.name)
