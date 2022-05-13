@@ -32,10 +32,13 @@ fun buildGetterFunctionDynamic(domainKlass: KClass<*>, func: KCallable<*>): Java
                 .addParameter(Object::class.java, "target")
                 .returns(TypeName.VOID)
                 .addStatement(
-                        "Object v = ((\$T) target).\$L()",
+                        "\$T v = ((\$T) target).\$L()",
+                        (func.returnType.classifier as KClass<*>).java,
                         domainKlass.java,
                         funcTargetName)
-                .addStatement("out.print(\"\$L() = \" + v + \", \")", func.name)
+                .addStatement("out.print(\"\$L() = \")", func.name)
+                .addStatement("out.print(v)")
+                .addStatement("out.print(\", \")")
                 .build()
 
         val getter = TypeSpec
@@ -84,7 +87,9 @@ fun buildGetterPropertyDynamic(domainKlass: KClass<*>, prop: KProperty<*>): Java
                         (prop.returnType.classifier as KClass<*>).java,
                         domainKlass.java,
                         prop.getter.javaMethod?.name)
-                .addStatement("out.print(\"\$L = \" + v + \", \")", prop.name)
+                .addStatement("out.print(\"\$L = \")", prop.name)
+                .addStatement("out.print(v)")
+                .addStatement("out.print(\", \")")
                 .build()
 
         val getter = TypeSpec

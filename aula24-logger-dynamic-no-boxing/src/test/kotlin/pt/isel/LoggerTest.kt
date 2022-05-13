@@ -8,6 +8,26 @@ class PrinterStringBuilder : Printer {
     override fun print(msg: Any?) {
         buffer.append(msg)
     }
+
+    override fun print(msg: Int) {
+        buffer.append(msg)
+    }
+
+    override fun print(msg: Long) {
+        buffer.append(msg)
+    }
+
+    override fun print(msg: Short) {
+        buffer.append(msg)
+    }
+
+    override fun print(msg: Float) {
+        buffer.append(msg)
+    }
+
+    override fun print(msg: Byte) {
+        buffer.append(msg)
+    }
 }
 
 class LoggerTest {
