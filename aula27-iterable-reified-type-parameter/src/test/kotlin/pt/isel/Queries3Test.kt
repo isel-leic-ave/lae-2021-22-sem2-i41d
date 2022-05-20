@@ -9,14 +9,14 @@ import java.io.File
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class Queries2Test {
+class Queries3Test {
     private val lae2022uri = ClassLoader.getSystemClassLoader().getResource("lae2022.txt").toURI()
 
     @Test fun `First surname of a Student with number greater than 4700 and first letter A`() {
         val actual = File(lae2022uri)
             .readLines()
             .parseCsv(';')
-            .convert { it.toStudent() }
+            .convert { it.toObject<Student>(Student::class) }
             .where { it.nr > 47000 }
             .convert { it.name.split(" ").last() }
             .where { it.startsWith("A") }

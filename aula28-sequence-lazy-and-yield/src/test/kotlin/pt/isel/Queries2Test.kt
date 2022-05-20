@@ -13,16 +13,18 @@ class Queries2Test {
     private val lae2022uri = ClassLoader.getSystemClassLoader().getResource("lae2022.txt").toURI()
 
     @Test fun `First surname of a Student with number greater than 4700 and first letter A`() {
+        var count = 0
         val actual = File(lae2022uri)
             .readLines()
             .parseCsv(';')
-            .convert { it.toStudent() }
-            .where { it.nr > 47000 }
-            .convert { it.name.split(" ").last() }
-            .where { it.startsWith("A") }
+            .convert { count++; it.toStudent() }
+            .where { count++; println("FILTER ${it.nr}"); it.nr > 47000 }
+            .convert { count++; println("Convert ${it.nr}"); it.name.split(" ").last() }
+            .where { count++; it.startsWith("A") }
             .iterator()
             .next()
         assertEquals("Almeida", actual)
+        assertEquals(356, count)
     }
 
     @Test fun `With Collection Extensions get first surname of a Student with number greater than 4700 and first letter A`() {
