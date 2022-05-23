@@ -10,6 +10,7 @@ import java.nio.file.Files
 import kotlin.io.path.toPath
 import kotlin.streams.asSequence
 import kotlin.test.Test
+import kotlin.test.assertContentEquals
 import kotlin.test.assertEquals
 
 class Queries5Test {
@@ -44,5 +45,57 @@ class Queries5Test {
             .next()
         assertEquals("Almeida", actual)
         assertEquals(22, count)
+    }
+
+     @Test fun `Concat two sequences of strings with Iterable lazy implementation`() {
+        val first: Iterable<String> = listOf("Portugal", "Football", "Teams")
+        val other: Iterable<String> = listOf("FCP", "The", "Champion")
+        val actual = first.concatLazy(other)
+        val expected = listOf("Portugal", "Football", "Teams", "FCP", "The", "Champion")
+        assertContentEquals(expected, actual)
+    }
+
+    @Test fun `Concat with empty sequence`() {
+        val first: Iterable<String> = listOf("Portugal", "Football", "Teams")
+        val other: Iterable<String> = emptyList()
+        val actual = first.concatLazy(other)
+        val expected = listOf("Portugal", "Football", "Teams")
+        assertContentEquals(expected, actual)
+    }
+
+    @Test fun `Concat empty sequence with other`() {
+        val first: Iterable<String> = emptyList()
+        val other: Iterable<String> = listOf("FCP", "The", "Champion")
+        val actual = first.concatLazy(other)
+        val expected = listOf("FCP", "The", "Champion")
+        assertContentEquals(expected, actual)
+    }
+
+    @Test fun `Concat two sequences of strings with Sequence lazy implementation`() {
+        val first = sequenceOf("Portugal", "Football", "Teams")
+        val other = sequenceOf("FCP", "The", "Champion")
+        val actual = first.concat(other)
+        val expected = sequenceOf("Portugal", "Football", "Teams", "FCP", "The", "Champion")
+        assertContentEquals(expected, actual)
+    }
+
+    @Test fun `Collapses a sequence of strings with Sequence lazy implementation`() {
+        val letters = sequenceOf("a", "b", "b", "a", "c", "x", "x", "b", "b")
+        val actual = letters.collapse()
+        val expected = sequenceOf("a", "b", "a", "c", "x", "b",)
+        assertContentEquals(expected, actual)
+    }
+
+    @Test fun `Windows of size 3 of a sequence ofInt values`() {
+        val nrs = sequenceOf(1,2,3,4,5,6,7,8)
+        val expected = sequenceOf(
+            sequenceOf(1,2,3),
+            sequenceOf(4,5,6),
+            sequenceOf(7,8),
+        )
+        val actual = nrs.window(3).iterator()
+        expected.forEach {
+            assertContentEquals(it, actual.next())
+        }
     }
 }
