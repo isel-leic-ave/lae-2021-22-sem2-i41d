@@ -22,11 +22,12 @@ class CloseResourcesTest {
          * We cannot delete corresponding File out.txt until the handle is released!
          */
         assertFailsWith<FileSystemException> {
-            println(Path(OUT).deleteIfExists())
+            Path(OUT).deleteIfExists()
         }
         /*
          * Running GC will put FileOutputStream object in the Finalization queue.
          * Running finalization will release the handle hold by FileOutputStream.
+         * ALERT: DO NOT use this in your code!!!!
          */
         System.gc()
         System.runFinalization()
@@ -42,6 +43,7 @@ class CloseResourcesTest {
          * FileOutputStream keeps a handle to the native resource.
          */
         FileOutputStream(OUT).use {
+
             /*
              * We cannot delete corresponding File out.txt until the handle is released!
              */
@@ -49,6 +51,7 @@ class CloseResourcesTest {
                 println(Path(OUT).deleteIfExists())
             }
         }
+
         /*
          * Once the handle is release we can safely delete out.txt file.
          */
